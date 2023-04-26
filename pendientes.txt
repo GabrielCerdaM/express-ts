@@ -1,0 +1,6 @@
+1.- Login,Conexion con base de datos pendiente
+2.- Pendiente revision headers solicitud HTTP
+3.- Revision cookies/session
+4.- Pendiente MiddlewareResponse
+5.- Manejador de errores para metodo register
+6.- Terminar resto de clases y tablas de BDD
