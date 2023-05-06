@@ -1,80 +1,50 @@
-import { log } from "console";
-import { pool } from "./config/dbconfig";
+import UserSequelize from "./sequelize/userSequelize";
 
-export interface User {
+export interface IUser {
+  id?: number;
   email: string;
   password: string;
   username: string;
   name: string;
   lastname: string;
-  created_at?: string;
-  updated_at?: string;
-  deleted_at?: string;
+  created_at?: Date;
+  updated_at?: Date;
+  deleted_at?: Date;
 }
 
-export const getAllUsers = (): Promise<User[]> => {
-  return new Promise((resolve, reject) => {
-    return pool.query("SELECT * FROM users", (error, results) => {
-      if (error) {
-        return reject(error);
-      }
-      return resolve(results);
-    });
-  });
-};
+class User extends UserSequelize implements IUser {
+  id?: number;
+  email: string;
+  password: string;
+  username: string;
+  name: string;
+  lastname: string;
+  created_at?: Date;
+  updated_at?: Date;
+  deleted_at?: Date;
 
-export const getUserById = (id: number): Promise<User> => {
-  return new Promise((resolve, reject) => {
-    return pool.query(
-      `SELECT * FROM users where id = ${id}`,
-      (error, results) => {
-        if (error) {
-          return reject(error);
-        }
-        return resolve(results);
-      }
-    );
-  });
-};
+  constructor(
+    email: string,
+    password: string,
+    username: string,
+    name: string,
+    lastname: string,
+    id?: number,
+    created_at?: Date,
+    updated_at?: Date,
+    deleted_at?: Date
+  ) {
+    super();
+    this.id = id;
+    this.email = email;
+    this.password = password;
+    this.username = username;
+    this.name = name;
+    this.lastname = lastname;
+    this.created_at = created_at;
+    this.updated_at = updated_at;
+    this.deleted_at = deleted_at;
+  }
+}
 
-export const getUserByEmail = (email: string): Promise<User> => {
-  return new Promise((resolve, reject) => {
-    return pool.query(
-      `SELECT * FROM users where email =  ?`,
-      email,
-      (error, results) => {
-        if (error) {
-          return reject(error);
-        }
-        return resolve(results);
-      }
-    );
-  });
-};
-
-export const register = (user: User): Promise<number> => {
-  return new Promise((resolve, reject) => {
-    const sql = "INSERT INTO users SET ?";
-    return pool.query(sql, user, (error, results) => {
-      if (error) {
-        return reject(error);
-      }
-      return resolve(results.insertId);
-    });
-  });
-};
-
-export const exist = (email: string): Promise<boolean> => {
-  return new Promise((resolve, reject) => {
-    try {
-      const user = getUser(userId);
-
-      if (!user) {
-        throw new Error(user);
-      }
-      return resolve(true);
-    } catch (error) {
-      return reject(false);
-    }
-  });
-};
+export default User;

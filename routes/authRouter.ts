@@ -1,7 +1,9 @@
 import express from "express";
 import auth from "basic-auth";
-import { getUserByEmail, register } from "../users";
+import { getUserByEmail, register, login } from "../repository/UserRepository";
 import encrypt from "../helpers/encrypt";
+import { log } from "console";
+import User from "../users";
 const router = express.Router();
 
 router.get("/", async (req, res) => {
@@ -13,7 +15,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/login", (req, res) => {
+router.post("/login", async (req, res) => {
   try {
     const user = auth(req);
     // Verificar si el usuario está autenticado
@@ -23,7 +25,9 @@ router.post("/login", (req, res) => {
     }
 
     // Verificar las credenciales del usuario
-    if (user.name === "username" && user.pass === "password") {
+    const verified = await login(user.name, user.pass);
+
+    if (verified) {
       req.session.loggedin = true;
       req.session.username = user.name;
       res.send("Logged in successfully");
@@ -31,6 +35,14 @@ router.post("/login", (req, res) => {
       res.setHeader("WWW-Authenticate", 'Basic realm="Enter credentials"');
       res.status(401).send("Invalid credentials");
     }
+    // if (user.name === "username" && user.pass === "password") {
+    //   req.session.loggedin = true;
+    //   req.session.username = user.name;
+    //   res.send("Logged in successfully");
+    // } else {
+    //   res.setHeader("WWW-Authenticate", 'Basic realm="Enter credentials"');
+    //   res.status(401).send("Invalid credentials");
+    // }
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal server error");
@@ -50,27 +62,25 @@ router.post("/register", async (req, res) => {
   try {
     const { username, name, lastname, email, password } = req.body;
 
-    const user = await getUserByEmail(email);
-
-    if (user.length > 0) {
-      return res.status(500).send("User exist");
-    }
-
     const passwordEncrypted = await encrypt(password);
 
-    const usuario = {
+    const usuario = new User(
       username,
       name,
       lastname,
       email,
-      password: passwordEncrypted,
-    };
+      passwordEncrypted
+    );
 
-    const userId = await register(usuario);
+    const newUser = await register(usuario);
 
-    res.json(userId);
+    if (!newUser) {
+      res.status(500).send("User already exist");
+    } else {
+      res.status(200).json(newUser);
+    }
   } catch (error) {
-    console.error(error);
+    console.error({ error });
     res.status(500).send("Internal Server Error");
   }
 });

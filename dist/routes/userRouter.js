@@ -12,12 +12,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const users_1 = require("../users");
+const UserRepository_1 = require("../repository/UserRepository");
 const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
 router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const users = yield (0, users_1.getAllUsers)();
+        const users = yield (0, UserRepository_1.getAllUsers)();
         res.json(users);
     }
     catch (error) {

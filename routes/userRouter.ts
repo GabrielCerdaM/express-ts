@@ -1,5 +1,5 @@
 import encrypt from "../helpers/encrypt";
-import { getAllUsers, getUser, getUserByEmail, register } from "../users";
+import { getAllUsers } from "../repository/UserRepository";
 import express from "express";
 
 const router = express.Router();

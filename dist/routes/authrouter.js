@@ -14,8 +14,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const basic_auth_1 = __importDefault(require("basic-auth"));
-const users_1 = require("../users");
+const UserRepository_1 = require("../repository/UserRepository");
 const encrypt_1 = __importDefault(require("../helpers/encrypt"));
+const users_1 = __importDefault(require("../users"));
 const router = express_1.default.Router();
 router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -26,7 +27,7 @@ router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.status(500).send("Internal server error");
     }
 }));
-router.post("/login", (req, res) => {
+router.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = (0, basic_auth_1.default)(req);
         // Verificar si el usuario está autenticado
@@ -35,7 +36,8 @@ router.post("/login", (req, res) => {
             res.status(401).send("Authentication required");
         }
         // Verificar las credenciales del usuario
-        if (user.name === "username" && user.pass === "password") {
+        const verified = yield (0, UserRepository_1.login)(user.name, user.pass);
+        if (verified) {
             req.session.loggedin = true;
             req.session.username = user.name;
             res.send("Logged in successfully");
@@ -44,12 +46,20 @@ router.post("/login", (req, res) => {
             res.setHeader("WWW-Authenticate", 'Basic realm="Enter credentials"');
             res.status(401).send("Invalid credentials");
         }
+        // if (user.name === "username" && user.pass === "password") {
+        //   req.session.loggedin = true;
+        //   req.session.username = user.name;
+        //   res.send("Logged in successfully");
+        // } else {
+        //   res.setHeader("WWW-Authenticate", 'Basic realm="Enter credentials"');
+        //   res.status(401).send("Invalid credentials");
+        // }
     }
     catch (error) {
         console.error(error);
         res.status(500).send("Internal server error");
     }
-});
+}));
 // Ruta para verificar la sesión del usuario
 router.get("/profile", (req, res) => {
     if (req.session.loggedin) {
@@ -62,23 +72,18 @@ router.get("/profile", (req, res) => {
 router.post("/register", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { username, name, lastname, email, password } = req.body;
-        const user = yield (0, users_1.getUserByEmail)(email);
-        if (user.length > 0) {
-            return res.status(500).send("User exist");
-        }
         const passwordEncrypted = yield (0, encrypt_1.default)(password);
-        const usuario = {
-            username,
-            name,
-            lastname,
-            email,
-            password: passwordEncrypted,
-        };
-        const userId = yield (0, users_1.register)(usuario);
-        res.json(userId);
+        const usuario = new users_1.default(username, name, lastname, email, passwordEncrypted);
+        const newUser = yield (0, UserRepository_1.register)(usuario);
+        if (!newUser) {
+            res.status(500).send("User already exist");
+        }
+        else {
+            res.status(200).json(newUser);
+        }
     }
     catch (error) {
-        console.error(error);
+        console.error({ error });
         res.status(500).send("Internal Server Error");
     }
 }));

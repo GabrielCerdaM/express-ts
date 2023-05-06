@@ -1,40 +1,31 @@
-import { DataTypes, Model } from "sequelize";
-import { sequelize } from "./config/sequelize";
-export interface IService {
-  id: number;
-  subcategoryId: number;
-  name: string;
-  description: string;
-  created_at: string;
-  updated_at: string;
-  deleted_at: string;
-}
+import { Model, DataTypes } from "sequelize";
+import { sequelize } from "../config/sequelize";
 
-class Service extends Model {}
+class UserSequelize extends Model {}
 
-Service.init(
+UserSequelize.init(
   {
     id: {
       type: DataTypes.INTEGER.UNSIGNED,
       autoIncrement: true,
       primaryKey: true,
     },
+    email: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+      unique: true,
+    },
+    password: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+    },
+    username: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+      unique: true,
+    },
     name: {
       type: DataTypes.STRING(100),
-      allowNull: false,
-      unique: true,
-    },
-    description: {
-      type: DataTypes.STRING(200),
-      allowNull: false,
-    },
-    userId: {
-      type: DataTypes.NUMBER,
-      allowNull: false,
-      unique: true,
-    },
-    subcategoryId: {
-      type: DataTypes.NUMBER,
       allowNull: false,
     },
     lastname: {
@@ -45,7 +36,6 @@ Service.init(
       type: DataTypes.DATE,
       allowNull: false,
       field: "createdAt",
-      // defaultValue: now,
     },
     updatedAt: {
       type: DataTypes.DATE,
@@ -77,4 +67,4 @@ Service.init(
   }
 );
 
-export default Service;
+export default UserSequelize;

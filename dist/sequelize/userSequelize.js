@@ -1,31 +1,31 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
-const sequelize_2 = require("./config/sequelize");
-class Service extends sequelize_1.Model {
+const sequelize_2 = require("../config/sequelize");
+class UserSequelize extends sequelize_1.Model {
 }
-Service.init({
+UserSequelize.init({
     id: {
         type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
         autoIncrement: true,
         primaryKey: true,
     },
+    email: {
+        type: sequelize_1.DataTypes.STRING(50),
+        allowNull: false,
+        unique: true,
+    },
+    password: {
+        type: sequelize_1.DataTypes.STRING(50),
+        allowNull: false,
+    },
+    username: {
+        type: sequelize_1.DataTypes.STRING(50),
+        allowNull: false,
+        unique: true,
+    },
     name: {
         type: sequelize_1.DataTypes.STRING(100),
-        allowNull: false,
-        unique: true,
-    },
-    description: {
-        type: sequelize_1.DataTypes.STRING(200),
-        allowNull: false,
-    },
-    userId: {
-        type: sequelize_1.DataTypes.NUMBER,
-        allowNull: false,
-        unique: true,
-    },
-    subcategoryId: {
-        type: sequelize_1.DataTypes.NUMBER,
         allowNull: false,
     },
     lastname: {
@@ -36,7 +36,6 @@ Service.init({
         type: sequelize_1.DataTypes.DATE,
         allowNull: false,
         field: "createdAt",
-        // defaultValue: now,
     },
     updatedAt: {
         type: sequelize_1.DataTypes.DATE,
@@ -65,4 +64,4 @@ Service.init({
         },
     ],
 });
-exports.default = Service;
+exports.default = UserSequelize;

@@ -18,6 +18,8 @@ import serviceRouter from "./routes/serviceRouter";
 import contractRouter from "./routes/contractRouter";
 
 import logged from "./middlewares/logged";
+import User from "./users";
+import { getAllUsers } from "./repository/UserRepository";
 
 // Middleware para analizar el cuerpo de la solicitud
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -31,8 +33,13 @@ app.use(
   })
 );
 
-app.get("/", (req, res) => {
-  res.send("Express + Typescrypt Server");
+app.get("/", async (req, res) => {
+  try {
+    const user = await getAllUsers;
+    res.json(user);
+  } catch (error) {
+    res.send(error);
+  }
 });
 
 app.use("/auth", authRouter);
