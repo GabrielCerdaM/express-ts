@@ -13,7 +13,7 @@ import bodyParser from "body-parser";
 import authRouter from "./routes/authRouter";
 import userRouter from "./routes/userRouter";
 import serviceRouter from "./routes/serviceRouter";
-
+import contractRouter from "./routes/contractRouter";
 import logged from "./middlewares/logged";
 import User from "./users";
 import { getAllUsers } from "./repository/UserRepository";
@@ -44,6 +44,8 @@ app.use("/auth", authRouter);
 app.use("/user", logged, userRouter);
 
 app.use("/services", logged, serviceRouter);
+
+app.use("/contracts", logged, contractRouter);
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at https://localhost:${port}`);

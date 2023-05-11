@@ -4,6 +4,7 @@ import ServiceSequelize from "./sequelize/serviceSequelize";
 export interface IService {
   id?: number;
   subcategoryId: number;
+  userId: number;
   name: string;
   description: string;
   created_at?: Date;
@@ -14,6 +15,7 @@ export interface IService {
 class Service extends ServiceSequelize implements IService {
   id?: number;
   subcategoryId: number;
+  userId: number;
   name: string;
   description: string;
   created_at?: Date;
@@ -21,6 +23,7 @@ class Service extends ServiceSequelize implements IService {
   deleted_at?: Date;
   constructor(
     subcategoryId: number,
+    userId: number,
     name: string,
     description: string,
     id?: number,
@@ -30,6 +33,7 @@ class Service extends ServiceSequelize implements IService {
   ) {
     super();
     this.name = name;
+    this.userId = userId;
     this.description = description;
     this.subcategoryId = subcategoryId;
     this.created_at = created_at;

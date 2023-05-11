@@ -20,9 +20,7 @@ const port = process.env.PORT;
 const key = process.env.SECRET_SESSION;
 const express_session_1 = __importDefault(require("express-session"));
 const body_parser_1 = __importDefault(require("body-parser"));
-const productsRouter_1 = __importDefault(require("./routes/productsRouter"));
 const authRouter_1 = __importDefault(require("./routes/authRouter"));
-const accountRouter_1 = __importDefault(require("./routes/accountRouter"));
 const userRouter_1 = __importDefault(require("./routes/userRouter"));
 const serviceRouter_1 = __importDefault(require("./routes/serviceRouter"));
 const contractRouter_1 = __importDefault(require("./routes/contractRouter"));
@@ -47,8 +45,6 @@ app.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 }));
 app.use("/auth", authRouter_1.default);
 app.use("/user", logged_1.default, userRouter_1.default);
-app.use("/products", logged_1.default, productsRouter_1.default);
-app.use("/accounts", logged_1.default, accountRouter_1.default);
 app.use("/services", logged_1.default, serviceRouter_1.default);
 app.use("/contracts", logged_1.default, contractRouter_1.default);
 app.listen(port, () => {

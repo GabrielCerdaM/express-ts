@@ -12,11 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const contractRepository_1 = require("../repository/contractRepository");
-const router = express_1.default.Router();
-router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const services = yield (0, contractRepository_1.getAllContracts)();
-    res.send(services);
-}));
-exports.default = router;
+exports.getAllContracts = void 0;
+const contractSequelize_1 = __importDefault(require("../sequelize/contractSequelize"));
+const getAllContracts = () => __awaiter(void 0, void 0, void 0, function* () {
+    const contracts = yield contractSequelize_1.default.findAll();
+    return contracts !== null && contracts !== void 0 ? contracts : null;
+});
+exports.getAllContracts = getAllContracts;

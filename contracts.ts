@@ -1,6 +1,7 @@
 import { pool } from "./config/dbconfig";
+import ContractSequelize from "./sequelize/contractSequelize";
 
-export interface Contract {
+export interface IContract {
   id: number;
   serviceId: number;
   offeredById: number;
@@ -8,18 +9,50 @@ export interface Contract {
   name: string;
   price: number;
   duration: string;
+  durationType: string;
   created_at: string;
   updated_at: string;
   deleted_at: string;
 }
 
-export const getAllContracts = (): Promise<Contract[]> => {
-  return new Promise((resolve, reject) => {
-    return pool.query("SELECT * FROM contracts", (error, results) => {
-      if (error) {
-        return reject(error);
-      }
-      return resolve(results);
-    });
-  });
-};
+class Contract extends ContractSequelize implements IContract {
+  id: number;
+  serviceId: number;
+  offeredById: number;
+  clientId: number;
+  name: string;
+  price: number;
+  duration: string;
+  durationType: string;
+  created_at: string;
+  updated_at: string;
+  deleted_at: string;
+  constructor(
+    id: number,
+    serviceId: number,
+    offeredById: number,
+    clientId: number,
+    name: string,
+    price: number,
+    duration: string,
+    durationType: string,
+    created_at: string,
+    updated_at: string,
+    deleted_at: string
+  ) {
+    super();
+    this.id = id;
+    this.serviceId = serviceId;
+    this.offeredById = offeredById;
+    this.clientId = clientId;
+    this.name = name;
+    this.price = price;
+    this.duration = duration;
+    this.durationType = durationType;
+    this.created_at = created_at;
+    this.updated_at = updated_at;
+    this.deleted_at = deleted_at;
+  }
+}
+
+export default Contract;

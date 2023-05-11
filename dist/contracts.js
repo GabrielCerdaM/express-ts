@@ -1,15 +1,23 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllContracts = void 0;
-const dbconfig_1 = require("./config/dbconfig");
-const getAllContracts = () => {
-    return new Promise((resolve, reject) => {
-        return dbconfig_1.pool.query("SELECT * FROM contracts", (error, results) => {
-            if (error) {
-                return reject(error);
-            }
-            return resolve(results);
-        });
-    });
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.getAllContracts = getAllContracts;
+Object.defineProperty(exports, "__esModule", { value: true });
+const contractSequelize_1 = __importDefault(require("./sequelize/contractSequelize"));
+class Contract extends contractSequelize_1.default {
+    constructor(id, serviceId, offeredById, clientId, name, price, duration, durationType, created_at, updated_at, deleted_at) {
+        super();
+        this.id = id;
+        this.serviceId = serviceId;
+        this.offeredById = offeredById;
+        this.clientId = clientId;
+        this.name = name;
+        this.price = price;
+        this.duration = duration;
+        this.durationType = durationType;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
+        this.deleted_at = deleted_at;
+    }
+}
+exports.default = Contract;
