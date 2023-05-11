@@ -1,41 +1,38 @@
-import { Model, DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../config/sequelize";
+class ServiceSequelize extends Model {}
 
-class UserSequelize extends Model {}
-
-UserSequelize.init(
+ServiceSequelize.init(
   {
     id: {
       type: DataTypes.INTEGER.UNSIGNED,
       autoIncrement: true,
       primaryKey: true,
     },
-    email: {
-      type: DataTypes.STRING(50),
-      allowNull: false,
-      unique: true,
-    },
-    password: {
-      type: DataTypes.STRING(50),
-      allowNull: false,
-    },
-    username: {
-      type: DataTypes.STRING(50),
-      allowNull: false,
-      unique: true,
-    },
     name: {
       type: DataTypes.STRING(100),
       allowNull: false,
+      unique: true,
     },
-    lastname: {
-      type: DataTypes.STRING(50),
+    description: {
+      type: DataTypes.STRING(200),
       allowNull: false,
+    },
+    userId: {
+      type: DataTypes.NUMBER,
+      allowNull: false,
+      unique: true,
+    },
+    subCategoryId: {
+      type: DataTypes.NUMBER,
+      allowNull: false,
+      field: "subcategoryId",
     },
     created_at: {
       type: DataTypes.DATE,
       allowNull: false,
       field: "created_at",
+      // defaultValue: now,
     },
     updated_at: {
       type: DataTypes.DATE,
@@ -50,21 +47,11 @@ UserSequelize.init(
   },
   {
     sequelize,
-    tableName: "users",
+    tableName: "services",
     timestamps: true,
     underscored: true,
     paranoid: true,
-    indexes: [
-      {
-        unique: true,
-        fields: ["email"],
-      },
-      {
-        unique: true,
-        fields: ["username"],
-      },
-    ],
   }
 );
 
-export default UserSequelize;
+export default ServiceSequelize;

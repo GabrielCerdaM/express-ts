@@ -12,12 +12,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const service_1 = require("../service");
+// import { getAllServices, getAllServices2 } from "../service";
 const express_1 = __importDefault(require("express"));
+const serviceRepository_1 = require("../repository/serviceRepository");
 const router = express_1.default.Router();
 router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const services = yield (0, service_1.getAllServices)();
+        const services = yield (0, serviceRepository_1.getAllServices)();
         res.json(services);
     }
     catch (error) {
@@ -27,8 +28,8 @@ router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 }));
 router.get("/2", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const services = yield (0, service_1.getAllServices2)();
-        res.json(services);
+        // const services = await getAllServices2();
+        // res.json(services);
     }
     catch (error) {
         console.error(error);
