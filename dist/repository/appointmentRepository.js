@@ -12,23 +12,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllServices = void 0;
-const serviceSequelize_1 = __importDefault(require("../sequelize/serviceSequelize"));
-const userSequelize_1 = __importDefault(require("../sequelize/userSequelize"));
-const getAllServices = () => {
-    return new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
-        try {
-            const services = yield serviceSequelize_1.default.findAll({
-                include: userSequelize_1.default,
-            });
-            // if (services) {
-            //   reject(null);
-            // }
-            resolve(services);
-        }
-        catch (error) {
-            reject(JSON.stringify(error));
-        }
-    }));
-};
-exports.getAllServices = getAllServices;
+exports.appointment = void 0;
+const contractSequelize_1 = __importDefault(require("../sequelize/contractSequelize"));
+const appointment = (serviceId, userId, price, name) => __awaiter(void 0, void 0, void 0, function* () {
+    const newContract = yield contractSequelize_1.default.create({
+        serviceId,
+        clientId: userId,
+        price,
+        name,
+    });
+    return newContract !== null && newContract !== void 0 ? newContract : null;
+});
+exports.appointment = appointment;

@@ -4,7 +4,6 @@ import ContractSequelize from "./sequelize/contractSequelize";
 export interface IContract {
   id: number;
   serviceId: number;
-  offeredById: number;
   clientId: number;
   name: string;
   price: number;
@@ -18,7 +17,6 @@ export interface IContract {
 class Contract extends ContractSequelize implements IContract {
   id: number;
   serviceId: number;
-  offeredById: number;
   clientId: number;
   name: string;
   price: number;
@@ -30,7 +28,6 @@ class Contract extends ContractSequelize implements IContract {
   constructor(
     id: number,
     serviceId: number,
-    offeredById: number,
     clientId: number,
     name: string,
     price: number,
@@ -43,7 +40,6 @@ class Contract extends ContractSequelize implements IContract {
     super();
     this.id = id;
     this.serviceId = serviceId;
-    this.offeredById = offeredById;
     this.clientId = clientId;
     this.name = name;
     this.price = price;

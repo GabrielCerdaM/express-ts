@@ -24,6 +24,7 @@ const authRouter_1 = __importDefault(require("./routes/authRouter"));
 const userRouter_1 = __importDefault(require("./routes/userRouter"));
 const serviceRouter_1 = __importDefault(require("./routes/serviceRouter"));
 const contractRouter_1 = __importDefault(require("./routes/contractRouter"));
+const appointmentRouter_1 = __importDefault(require("./routes/appointmentRouter"));
 const logged_1 = __importDefault(require("./middlewares/logged"));
 const UserRepository_1 = require("./repository/UserRepository");
 // Middleware para analizar el cuerpo de la solicitud
@@ -47,6 +48,7 @@ app.use("/auth", authRouter_1.default);
 app.use("/user", logged_1.default, userRouter_1.default);
 app.use("/services", logged_1.default, serviceRouter_1.default);
 app.use("/contracts", logged_1.default, contractRouter_1.default);
+app.use("/appointment", logged_1.default, appointmentRouter_1.default);
 app.listen(port, () => {
     console.log(`[server]: Server is running at https://localhost:${port}`);
 });

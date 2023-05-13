@@ -12,23 +12,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllServices = void 0;
-const serviceSequelize_1 = __importDefault(require("../sequelize/serviceSequelize"));
-const userSequelize_1 = __importDefault(require("../sequelize/userSequelize"));
-const getAllServices = () => {
-    return new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
-        try {
-            const services = yield serviceSequelize_1.default.findAll({
-                include: userSequelize_1.default,
-            });
-            // if (services) {
-            //   reject(null);
-            // }
-            resolve(services);
-        }
-        catch (error) {
-            reject(JSON.stringify(error));
-        }
-    }));
-};
-exports.getAllServices = getAllServices;
+const express_1 = __importDefault(require("express"));
+const appointmentRepository_1 = require("../repository/appointmentRepository");
+const router = express_1.default.Router();
+router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { serviceId, userId, price, name } = req.body;
+        const newAppointment = yield (0, appointmentRepository_1.appointment)(serviceId, userId, price, name);
+        // res.json({ serviceId, userId });
+        res.json(newAppointment);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send("Internal server error");
+    }
+}));
+exports.default = router;

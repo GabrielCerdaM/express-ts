@@ -1,10 +1,13 @@
 import { sequelize } from "../config/sequelize";
 import ServiceSequelize from "../sequelize/serviceSequelize";
+import UserSequelize from "../sequelize/userSequelize";
 
 export const getAllServices = (): Promise<ServiceSequelize[]> => {
   return new Promise(async (resolve, reject) => {
     try {
-      const services = await ServiceSequelize.findAll();
+      const services = await ServiceSequelize.findAll({
+        include: UserSequelize,
+      });
       // if (services) {
       //   reject(null);
       // }
@@ -14,21 +17,3 @@ export const getAllServices = (): Promise<ServiceSequelize[]> => {
     }
   });
 };
-
-// export const getAllServices2 = (): Promise<any[]> => {
-//   return new Promise((resolve, reject) => {
-//     return pool.query(
-//       `
-//       SELECT *
-//       FROM services
-//       INNER JOIN users ON services.userId = users.id
-//     `,
-//       (error, results) => {
-//         if (error) {
-//           return reject(error);
-//         }
-//         return resolve(results);
-//       }
-//     );
-//   });
-// };

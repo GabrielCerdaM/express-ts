@@ -1,5 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../config/sequelize";
+import User from "../users";
+import UserSequelize from "./userSequelize";
 class ServiceSequelize extends Model {}
 
 ServiceSequelize.init(
@@ -53,5 +55,7 @@ ServiceSequelize.init(
     paranoid: true,
   }
 );
+
+ServiceSequelize.belongsTo(UserSequelize, { foreignKey: "user_id" });
 
 export default ServiceSequelize;

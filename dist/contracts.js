@@ -5,11 +5,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const contractSequelize_1 = __importDefault(require("./sequelize/contractSequelize"));
 class Contract extends contractSequelize_1.default {
-    constructor(id, serviceId, offeredById, clientId, name, price, duration, durationType, created_at, updated_at, deleted_at) {
+    constructor(id, serviceId, clientId, name, price, duration, durationType, created_at, updated_at, deleted_at) {
         super();
         this.id = id;
         this.serviceId = serviceId;
-        this.offeredById = offeredById;
         this.clientId = clientId;
         this.name = name;
         this.price = price;

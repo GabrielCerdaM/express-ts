@@ -16,12 +16,6 @@ ContractSequelize.init({
         unique: true,
         field: "serviceId",
     },
-    offerById: {
-        type: sequelize_1.DataTypes.NUMBER,
-        allowNull: false,
-        unique: true,
-        field: "offerById",
-    },
     clientId: {
         type: sequelize_1.DataTypes.NUMBER,
         allowNull: false,
@@ -41,18 +35,20 @@ ContractSequelize.init({
     },
     duration: {
         type: sequelize_1.DataTypes.NUMBER,
-        allowNull: false,
+        allowNull: true,
         field: "duration",
     },
     durationType: {
         type: sequelize_1.DataTypes.STRING(20),
         allowNull: false,
         field: "durationType",
+        defaultValue: "Hrs",
     },
     created_at: {
         type: sequelize_1.DataTypes.DATE,
         allowNull: false,
         field: "created_at",
+        defaultValue: new Date(),
     },
     updated_at: {
         type: sequelize_1.DataTypes.DATE,
