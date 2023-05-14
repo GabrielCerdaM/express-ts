@@ -1,5 +1,7 @@
 import { Model, DataTypes } from "sequelize";
 import { sequelize } from "../config/sequelize";
+import ServiceSequelize from "./serviceSequelize";
+import UserSequelize from "./userSequelize";
 
 class ContractSequelize extends Model {}
 
@@ -79,5 +81,8 @@ ContractSequelize.init(
     ],
   }
 );
+
+ContractSequelize.hasOne(ServiceSequelize, { foreignKey: "id" });
+ContractSequelize.belongsTo(UserSequelize, { foreignKey: "id" });
 
 export default ContractSequelize;

@@ -23,7 +23,6 @@ router.post("/login", async (req, res) => {
       res.setHeader("WWW-Authenticate", 'Basic realm="Enter credentials"');
       res.status(401).send("Authentication required");
     }
-
     // Verificar las credenciales del usuario
     const verified = await login(user.name, user.pass);
 
@@ -35,14 +34,6 @@ router.post("/login", async (req, res) => {
       res.setHeader("WWW-Authenticate", 'Basic realm="Enter credentials"');
       res.status(401).send("Invalid credentials");
     }
-    // if (user.name === "username" && user.pass === "password") {
-    //   req.session.loggedin = true;
-    //   req.session.username = user.name;
-    //   res.send("Logged in successfully");
-    // } else {
-    //   res.setHeader("WWW-Authenticate", 'Basic realm="Enter credentials"');
-    //   res.status(401).send("Invalid credentials");
-    // }
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal server error");

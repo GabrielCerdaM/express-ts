@@ -46,14 +46,6 @@ router.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* 
             res.setHeader("WWW-Authenticate", 'Basic realm="Enter credentials"');
             res.status(401).send("Invalid credentials");
         }
-        // if (user.name === "username" && user.pass === "password") {
-        //   req.session.loggedin = true;
-        //   req.session.username = user.name;
-        //   res.send("Logged in successfully");
-        // } else {
-        //   res.setHeader("WWW-Authenticate", 'Basic realm="Enter credentials"');
-        //   res.status(401).send("Invalid credentials");
-        // }
     }
     catch (error) {
         console.error(error);

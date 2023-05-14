@@ -3,8 +3,12 @@ import { getAllContracts } from "../repository/contractRepository";
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  const services = await getAllContracts();
-  res.send(services);
+  try {
+    const contracts = await getAllContracts();
+    res.send(contracts);
+  } catch (error) {
+    res.send(error);
+  }
 });
 
 export default router;

@@ -16,7 +16,12 @@ const express_1 = __importDefault(require("express"));
 const contractRepository_1 = require("../repository/contractRepository");
 const router = express_1.default.Router();
 router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const services = yield (0, contractRepository_1.getAllContracts)();
-    res.send(services);
+    try {
+        const contracts = yield (0, contractRepository_1.getAllContracts)();
+        res.send(contracts);
+    }
+    catch (error) {
+        res.send(error);
+    }
 }));
 exports.default = router;

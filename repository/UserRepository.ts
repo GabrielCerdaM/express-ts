@@ -2,6 +2,7 @@ import { pool } from "../config/dbconfig";
 import User from "../users";
 import { sequelize } from "../config/sequelize";
 import UserSequelize from "../sequelize/userSequelize";
+import { log } from "console";
 
 export const buscarUsuario = async (
   id: number
@@ -47,17 +48,22 @@ export const getUserByEmail = (
 
 export const login = (email: string, password: string): Promise<boolean> => {
   return new Promise(async (resolve, reject) => {
-    const user = await UserSequelize.findAll({
-      where: {
-        email,
-        password,
-      },
-    });
+    try {
+      const user = await UserSequelize.findAll({
+        where: {
+          email,
+          password,
+        },
+      });
 
-    if (!user || user.length < 1) {
+      if (!user || user.length < 1) {
+        throw new Error(`doesn't exist`);
+      }
+      resolve(true);
+    } catch (error) {
+      console.log({ error });
       reject(false);
     }
-    resolve(true);
   });
 };
 

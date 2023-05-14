@@ -54,16 +54,22 @@ const getUserByEmail = (email) => {
 exports.getUserByEmail = getUserByEmail;
 const login = (email, password) => {
     return new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
-        const user = yield userSequelize_1.default.findAll({
-            where: {
-                email,
-                password,
-            },
-        });
-        if (!user || user.length < 1) {
+        try {
+            const user = yield userSequelize_1.default.findAll({
+                where: {
+                    email,
+                    password,
+                },
+            });
+            if (!user || user.length < 1) {
+                throw new Error(`doesn't exist`);
+            }
+            resolve(true);
+        }
+        catch (error) {
+            console.log({ error });
             reject(false);
         }
-        resolve(true);
     }));
 };
 exports.login = login;
