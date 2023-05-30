@@ -57,4 +57,5 @@ ServiceSequelize.init({
     paranoid: true,
 });
 ServiceSequelize.belongsTo(userSequelize_1.default, { foreignKey: "user_id" });
+ServiceSequelize.belongsTo(userSequelize_1.default, { foreignKey: "user_id" });
 exports.default = ServiceSequelize;

@@ -26,10 +26,12 @@ router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.status(500).send("Internal server error");
     }
 }));
-router.get("/2", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        // const services = await getAllServices2();
-        // res.json(services);
+        const { id } = req.params;
+        console.log({ id });
+        const services = yield (0, serviceRepository_1.getService)(+id);
+        res.json(services);
     }
     catch (error) {
         console.error(error);

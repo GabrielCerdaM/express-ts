@@ -57,5 +57,6 @@ ServiceSequelize.init(
 );
 
 ServiceSequelize.belongsTo(UserSequelize, { foreignKey: "user_id" });
+ServiceSequelize.belongsTo(UserSequelize, { foreignKey: "user_id" });
 
 export default ServiceSequelize;

@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllServices = void 0;
+exports.getService = exports.getAllServices = void 0;
 const serviceSequelize_1 = __importDefault(require("../sequelize/serviceSequelize"));
 const userSequelize_1 = __importDefault(require("../sequelize/userSequelize"));
 const getAllServices = () => {
@@ -32,3 +32,18 @@ const getAllServices = () => {
     }));
 };
 exports.getAllServices = getAllServices;
+const getService = (id) => {
+    return new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            const service = yield serviceSequelize_1.default.findByPk(id, {
+                include: { all: true, nested: true },
+            });
+            console.log(service);
+            resolve(service);
+        }
+        catch (error) {
+            reject(JSON.stringify(error));
+        }
+    }));
+};
+exports.getService = getService;

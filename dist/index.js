@@ -46,7 +46,7 @@ app.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 }));
 app.use("/auth", authRouter_1.default);
 app.use("/user", logged_1.default, userRouter_1.default);
-app.use("/services", logged_1.default, serviceRouter_1.default);
+app.use("/services", serviceRouter_1.default);
 app.use("/contracts", logged_1.default, contractRouter_1.default);
 app.use("/appointment", logged_1.default, appointmentRouter_1.default);
 app.listen(port, () => {

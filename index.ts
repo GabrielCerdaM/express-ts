@@ -44,7 +44,7 @@ app.use("/auth", authRouter);
 
 app.use("/user", logged, userRouter);
 
-app.use("/services", logged, serviceRouter);
+app.use("/services", serviceRouter);
 
 app.use("/contracts", logged, contractRouter);
 
